@@ -1,29 +1,42 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
-@Table (name="Imóvel")
+@Table (name="Imovel")
 public class Imovel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-    private float Preco;
+    private float preco;
     private String endereco;
     private int numeroEnde;
-    private String Cep;
-    private Double Tamanho;
+    private String cep;
+    private float tamanho;
+    private boolean vendido = false;
+
+
+    @Lob
+    private byte[] imagem;
+
+    @ManyToOne(optional = false)//usário é obrigatório
+    @NotNull
+    @JsonIgnore
+    @JoinColumn(name="usuario_id")
+    private User usuario;
 
     @Override
     public String toString() {
         return "Imovel{" +
                 "Id=" + Id +
-                ", Preco=" + Preco +
+                ", Preco=" + preco +
                 ", endereco='" + endereco + '\'' +
                 ", numeroEnde=" + numeroEnde +
-                ", Cep='" + Cep + '\'' +
-                ", Tamanho=" + Tamanho +
+                ", Cep='" + cep + '\'' +
+                ", Tamanho=" + tamanho +
                 '}';
     }
 
@@ -52,26 +65,51 @@ public class Imovel {
     }
 
     public float getPreco() {
-        return Preco;
+        return preco;
     }
 
     public void setPreco(float preco) {
-        Preco = preco;
+        this.preco = preco;
     }
 
     public String getCep() {
-        return Cep;
+        return cep;
     }
 
     public void setCep(String cep) {
-        Cep = cep;
+        this.cep = cep;
     }
 
-    public Double getTamanho() {
-        return Tamanho;
+    public float getTamanho() {
+        return tamanho;
     }
 
-    public void setTamanho(Double tamanho) {
-        Tamanho = tamanho;
+    public void setTamanho(float tamanho) {
+        this.tamanho = tamanho;
     }
+
+    public User getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(User usuario) {
+        this.usuario = usuario;
+    }
+
+    public byte[] getImagem() {
+    return imagem;
+}
+
+    public void setImagem(byte[] imagem) {
+    this.imagem = imagem;}
+
+    public boolean isVendido() {
+        return vendido;
+    }
+
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
+    }
+
+
 }
